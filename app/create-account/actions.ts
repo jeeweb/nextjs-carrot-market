@@ -28,8 +28,10 @@ const formSchema = z
       })
       .min(5, "Way too short!!!")
       .max(10, "That is too loooong")
+      .toLowerCase()
+      .trim()
       .refine(checkUsername, "No potatoes allowed!"),
-    email: z.string().email(),
+    email: z.string().email().toLowerCase(),
     password: z
       .string()
       .min(10)
@@ -68,5 +70,7 @@ export async function createAccount(prevState: any, formData: FormData) {
   if (!result.success) {
     // console.log(result.error);  // console에 error표시
     return result.error.flatten();
+  } else {
+    console.log(result.data);
   }
 }
