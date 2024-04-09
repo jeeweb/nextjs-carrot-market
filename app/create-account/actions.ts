@@ -1,10 +1,10 @@
 "use server";
 import { z } from "zod";
-
-// password 정규식 - 소문자, 대문자, 숫자, 특수문자 일부를 모두 포함하는지 검사
-const passwordRegex = new RegExp(
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*?[#?!@$%^&*-]).+$/
-);
+import {
+  PASSWORD_MIN_LENGTH,
+  PASSWORD_REGEX,
+  PASSWORD_REGEX_ERROR,
+} from "../lib/constants";
 
 // username 요소 검증
 // potato 단어 감지
@@ -26,19 +26,14 @@ const formSchema = z
         invalid_type_error: "Username must be a string",
         required_error: "Where is my username???",
       })
-      .min(5, "Way too short!!!")
-      .max(10, "That is too loooong")
       .toLowerCase()
       .trim()
       .refine(checkUsername, "No potatoes allowed!"),
     email: z.string().email().toLowerCase(),
     password: z
       .string()
-      .min(10)
-      .regex(
-        passwordRegex,
-        "Passwords must contain at least one UPPERCASE, lowercase, number and special characters #?!@$%^&*-"
-      ),
+      .min(PASSWORD_MIN_LENGTH)
+      .regex(PASSWORD_REGEX, PASSWORD_REGEX_ERROR),
     confirm_password: z.string().min(10),
   })
   .refine(checkPasswords, {
