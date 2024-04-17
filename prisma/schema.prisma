@@ -22,4 +22,14 @@ model User {
   avatar String?
   createdAt DateTime @default(now())    // now()는 새 유저가 만들어지는 시점의 날짜를 가져옴
   updatedAt DateTime @updatedAt         // 유저가 업데이트 될 때마다 field가 변할 거라고 Prisma에게 알려줌
+  tokens  Token[]
+}
+
+model Token {
+  id        Int      @id @default(autoincrement())
+  payload   String   @unique            // 유저의 이메일이나 폰 번호 정보가 들어감
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
