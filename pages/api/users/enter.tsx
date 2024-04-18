@@ -33,12 +33,13 @@ async function handler(
   console.log(token);
 
   if (phone) {
+    /* 크래딧 낭비 방지를 위한 주석처리
     const message = await twilioClient.messages.create({
       messagingServiceSid: process.env.TWILIO_MSID,
       to: process.env.MY_PHONE!,
       body: `Your login token is ${payload}.`,
     });
-    console.log(message);
+    console.log(message);*/
   }
 
   return res.json({
