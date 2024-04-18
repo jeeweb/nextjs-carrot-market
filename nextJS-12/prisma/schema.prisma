@@ -1,0 +1,35 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id Int @id @default(autoincrement())    // id는 숫자, 유니크한 식별자, 따로 옵션이 없다면 점점 증가
+  phone String? @unique   // phone은 숫자, 필수값이 아닌 선택적인 옵션(물음표), 유일한 값
+  email String? @unique
+  name String
+  avatar String?
+  createdAt DateTime @default(now())    // now()는 새 유저가 만들어지는 시점의 날짜를 가져옴
+  updatedAt DateTime @updatedAt         // 유저가 업데이트 될 때마다 field가 변할 거라고 Prisma에게 알려줌
+  tokens  Token[]
+}
+
+model Token {
+  id        Int      @id @default(autoincrement())
+  payload   String   @unique            // 유저의 이메일이나 폰 번호 정보가 들어감
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
