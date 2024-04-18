@@ -10,7 +10,7 @@ async function handler(
   res: NextApiResponse<ResponseType>
 ) {
   const { phone, email } = req.body; // phone 혹은 email 둘 중 하나의 데이터를 가짐
-  const user = phone ? { phone: +phone } : email ? { email } : null;
+  const user = phone ? { phone } : email ? { email } : null;
   if (!user) return res.status(400).json({ ok: false });
   const payload = Math.floor(100000 + Math.random() * 900000) + ""; // 랜덤숫자토큰
   const token = await client.token.create({

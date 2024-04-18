@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
 import Button from "@components/button";
 import Input from "@components/input";
 import useMutation from "@libs/client/useMutation";
@@ -28,22 +29,35 @@ const Enter: NextPage = () => {
   const { register: tokenRegister, handleSubmit: tokenHandleSubmit } =
     useForm<TokenForm>();
   const [method, setMethod] = useState<"email" | "phone">("email");
+
   const onEmailClick = () => {
     reset();
     setMethod("email");
   };
+
   const onPhoneClick = () => {
     reset();
     setMethod("phone");
   };
+
   const onValid = (validForm: EnterForm) => {
     if (loading) return;
     enter(validForm);
   };
+
   const onTokenValid = (validForm: TokenForm) => {
     if (tokenLoading) return;
     confirmToken(validForm);
   };
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (tokenData?.ok) {
+      router.push("/");
+    }
+  }, [tokenData, router]);
+
   // console.log(data); // useMutation으로 받은 data 출력
   return (
     <div className="mt-16 px-4">

@@ -1,16 +1,7 @@
-import { withIronSessionApiRoute } from "iron-session/next";
 import { NextApiRequest, NextApiResponse } from "next";
 import withHandler, { ResponseType } from "@libs/server/withHandler";
 import client from "@libs/server/client";
-
-// req.session에 user가 있는 걸 타입스크립트에 알려주기
-declare module "iron-session" {
-  interface IronSessionData {
-    user?: {
-      id: number;
-    };
-  }
-}
+import { withApiSession } from "@libs/server/withSession";
 
 async function handler(
   req: NextApiRequest,
@@ -20,27 +11,29 @@ async function handler(
   const { token } = req.body;
 
   // token을 받아서 해당 token이 존재하는지 확인하고 존재한다면 해당 token 리턴받고, 없다면 null
-  const exists = await client.token.findUnique({
+  const foundToken = await client.token.findUnique({
     where: {
       payload: token,
     },
-    include: { user: true },
   });
-  if (!exists) return res.status(404).end();
+  if (!foundToken) return res.status(404).end();
 
-  console.log(exists);
+  console.log(foundToken);
   // token이 있다면 정보가 확인되지만 user 정보는 없음 (userId만 보임).
   // findUnique에 'include: {user: true}' 추가하면 user정보까지 가져올 수 있음
 
   req.session.user = {
-    id: exists.userId,
+    id: foundToken.userId,
   };
   await req.session.save(); // 개발자도구 - Application - Cookies 에서 확인 가능
 
-  res.status(200).end();
+  await client.token.deleteMany({
+    where: {
+      userId: foundToken.userId,
+    },
+  });
+
+  res.json({ ok: true });
 }
 
-export default withIronSessionApiRoute(withHandler("POST", handler), {
-  cookieName: "carrotsession",
-  password: "429108371985741902734",
-});
+export default withApiSession(withHandler("POST", handler));

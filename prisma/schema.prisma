@@ -16,7 +16,7 @@ datasource db {
 
 model User {
   id Int @id @default(autoincrement())    // id는 숫자, 유니크한 식별자, 따로 옵션이 없다면 점점 증가
-  phone BigInt? @unique   // phone은 숫자, 필수값이 아닌 선택적인 옵션(물음표), 유일한 값
+  phone String? @unique   // phone은 숫자, 필수값이 아닌 선택적인 옵션(물음표), 유일한 값
   email String? @unique
   name String
   avatar String?
