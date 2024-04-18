@@ -44,7 +44,7 @@ const Enter: NextPage = () => {
     if (tokenLoading) return;
     confirmToken(validForm);
   };
-  console.log(data); // useMutation으로 받은 data 출력
+  // console.log(data); // useMutation으로 받은 data 출력
   return (
     <div className="mt-16 px-4">
       <h3 className="text-3xl font-bold text-center">Enter to Carrot</h3>
