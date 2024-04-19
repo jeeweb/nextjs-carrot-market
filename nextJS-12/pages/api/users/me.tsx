@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import withHandler, { ResponseType } from "nextJS-12/libs/server/withHandler";
-import client from "nextJS-12/libs/server/client";
-import { withApiSession } from "nextJS-12/libs/server/withSession";
+import withHandler, { ResponseType } from "@libs/server/withHandler";
+import client from "@libs/server/client";
+import { withApiSession } from "@libs/server/withSession";
 
 async function handler(
   req: NextApiRequest,
@@ -17,4 +17,10 @@ async function handler(
   });
 }
 
-export default withApiSession(withHandler("GET", handler));
+export default withApiSession(
+  withHandler({
+    method: "GET",
+    handler,
+    // isPrivate: true    // true를 기본 설정으로 지정해주었기 때문에 생략 가능
+  })
+);
