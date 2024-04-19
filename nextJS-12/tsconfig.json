@@ -16,8 +16,8 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@libs/*": ["nextJS-12/libs/*"], // libs 폴더 안의 모든 파일
-      "@components/*": ["nextJS-12/components/*"] // components 폴더 안의 모든 파일
+      "@libs/*": ["libs/*"], // libs 폴더 안의 모든 파일
+      "@components/*": ["components/*"] // components 폴더 안의 모든 파일
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
