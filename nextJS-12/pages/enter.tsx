@@ -2,10 +2,10 @@ import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
-import Button from "nextJS-12/components/button";
-import Input from "nextJS-12/components/input";
-import useMutation from "nextJS-12/libs/client/useMutation";
-import { cls } from "nextJS-12/libs/client/utils";
+import Button from "@components/button";
+import Input from "@components/input";
+import useMutation from "@libs/client/useMutation";
+import { cls } from "@libs/client/utils";
 
 interface EnterForm {
   email?: string;

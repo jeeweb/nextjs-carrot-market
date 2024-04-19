@@ -1,4 +1,4 @@
-import { cls } from "nextJS-12/libs/client/utils";
+import { cls } from "@libs/client/utils";
 
 interface MessageProps {
   message: string;

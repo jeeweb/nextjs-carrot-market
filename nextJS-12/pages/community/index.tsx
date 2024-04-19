@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Link from "next/link";
-import FloatingButton from "nextJS-12/components/floating-button";
-import Layout from "nextJS-12/components/layout";
+import FloatingButton from "@components/floating-button";
+import Layout from "@components/layout";
 
 const Community: NextPage = () => {
   return (
