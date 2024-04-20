@@ -82,9 +82,6 @@ const Enter: NextPage = () => {
         ) : (
           <>
             <div className="flex flex-col items-center">
-              <h5 className="text-sm text-gray-500 font-medium">
-                Enter using:
-              </h5>
               <div className="grid  border-b  w-full mt-8 grid-cols-2 ">
                 <button
                   className={cls(
